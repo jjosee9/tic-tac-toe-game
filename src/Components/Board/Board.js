@@ -11,81 +11,81 @@ const Board = () => {
     const [playerXIsNext, setPlayerXIsNext] = useState(true)
 
     const renderSquare = (i) => {
-        return <Square value={squares[i]} onClick={() => handleClick(i)} /> 
+        return <Square value={squares[i]} onClick={() => handleClick(i)} />
     }
 
-    const handleClick = (i) =>{
-         const newSquares = [...squares]
-         const winnerDeclared = 
-        Boolean(calculateWinner(squares))
-         const squareAlreadyFilled =
-        Boolean(newSquares[i])
-           if (winnerDeclared || squareAlreadyFilled) 
-           return newSquares[i] = playerXIsNext ? "X" : "O"
+    const handleClick = (i) => {
+        const newSquares = [...squares]
+        const winnerDeclared = Boolean(calculateWinner(squares))
+        const squareAlreadyFilled = Boolean(newSquares[i])
+        if (winnerDeclared || squareAlreadyFilled) return
+        newSquares[i] = playerXIsNext ? "X" : "O"
 
         setSquares(newSquares)
         setPlayerXIsNext(!playerXIsNext)
     }
 
-    const isBoardFull = (squares) =>{
-        for (let i = 0; i < squares.length; i++){
-            if(squares[i] === null){
+    const isBoardFull = (squares) => {
+        for (let i = 0; i < squares.length; i++) {
+            if (squares[i] === null) {
                 return false
             }
         }
         return true
     }
 
+
     const calculateWinner = (squares) => {
-         /* Squares indexes as they appear in UI:
+        /* Squares indexes as they appear in UI:
         0 1 2
         3 4 5
         6 7 8
         */
-       const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ]; // shows all of the winning combinations ("lines")
-      //Iterate over lines
-      for (let line of lines){
-          const [a, b, c] = line;
-          if( squares[a] && squares[a] === squares[b] &&
-            squares[a] === squares[c]) {
+        const lines = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ]; // shows all of the winning combinations ("lines")
+        //Iterate over lines
+        for (let line of lines) {
+            const [a, b, c] = line
+            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
                 return squares[a]
             }
-      }
-      return null
+        }
+        return null
     }
 
     const winner = calculateWinner(squares)
 
     const getStatus = () => {
-        if(winner){
-            return "Congrats player" + winner + "for won!"
-        } else{
-            return "Next Player is player " + (playerXIsNext ? "X" : "O") 
+        if (winner) {
+            return "Congrats player " + winner + " for won!"
+        } else if (isBoardFull(squares)) {
+            return "The game ended in a draw!"
+        } else {
+            return "Next player is player" + (playerXIsNext ? "X" : "O")
         }
     }
 
-    const resetGame = () =>{
+    const resetGame = () => {
         setSquares(initialBoard)
         setPlayerXIsNext(true)
     }
 
     return (
         <>
-            <main className={`main--container
-             ${(winner && getStatus()===
-             "Congrats player" + winner + "for won!" ||
-             !winner && getStatus() === "The game ended in a draw!" ? "draw"
-               : "winner") } (playerXIsNext ? "X" : "O")}`}> 
-
+            <main className={`main--container 
+            ${(winner && getStatus() ===
+                    "Congrats player " + winner + " for won!" ||
+                    !winner && getStatus() === "The game ended in a draw!") ?
+                    (getStatus() === "The game ended in a draw!" ? "draw"
+                        : "winner") : (playerXIsNext ? "X" : "O")}`}>
 
                 <div className="logo">
                     <img src={r2h} alt="r2h logo" />
@@ -112,10 +112,11 @@ const Board = () => {
                             {renderSquare(8)}
                         </div>
                     </div>
-                    <ResetButton onClick={resetGame}/>
+                    <ResetButton onClick={resetGame} />
                 </div>
             </main>
         </>
     )
 }
+
 export default Board;
