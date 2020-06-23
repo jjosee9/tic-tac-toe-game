@@ -80,13 +80,14 @@ const Board = () => {
 
     return (
         <> 
+        <main className={`main--container
+        ${(winner && getStatus() ===
+            "Congrats player " + winner + " For Won!" ||
+            !winner && getStatus() === "The game ended in a draw!") ?
+        (getStatus() === "The game ended in a draw!" ? "draw"
+        : "winner") : (playerXIsNext ? "X" : "O")}`}>
         
-        <main className={`main--container 
-            ${(winner && getStatus() ===
-                    "Congrats player " + winner + " for won!" ||
-                    !winner && getStatus() === "The game ended in a draw!") ?
-                    (getStatus() === "The game ended in a draw!" ? "draw"
-                        : "winner") : (playerXIsNext ? "X" : "O")}`}>
+        
 
                 <div className="logo">
                     <img src={r2h} alt="r2h logo" />
