@@ -79,10 +79,11 @@ const Board = () => {
     }
 
     return (
-        <>
+        <> 
+        //eslint-disable-next-line
             <main className={`main--container 
             ${(winner && getStatus() ===
-                    "Congrats player " + winner + " for won!" ||
+                "Congrats player " + winner + " for won!" ||
                     !winner && getStatus() === "The game ended in a draw!") ?
                     (getStatus() === "The game ended in a draw!" ? "draw"
                         : "winner") : (playerXIsNext ? "X" : "O")}`}>
